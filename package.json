@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "description": "Simple way to send alerts via Slack, Email, Discord, SMS, etc.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
+	"bin": {
+		"generate-config": "./bin/generate-config.js"
+	},
   "author": "Nicholas Dangles",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
 }

@@ -1,0 +1,7 @@
+{
+	"discord": {
+		"enabled": false,
+		"token": "",
+		"send_to": ""
+	}	
+}
