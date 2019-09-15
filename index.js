@@ -1,3 +1,4 @@
+const path = require("path");
 const Discord = require('discord.js');
 const discord_client = new Discord.Client();
 
@@ -6,8 +7,8 @@ let discordLoggedIn = false;
 
 exports.configure = function(file) {
 		try {
-			user_config = require(file);
-			template_config = require("./simplert.cfg.json")
+			user_config = require(path.resolve(`${__dirname}/../../${file}`));
+			template_config = require(__dirname + "/simplert.cfg.json")
 
 			user_keys = getAllKeys(user_config)
 			template_keys = getAllKeys(template_config)
