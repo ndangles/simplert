@@ -1,6 +1,6 @@
 {
   "name": "simplert",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Simple way to send alerts via Slack, Email, Discord, SMS, etc.",
   "main": "index.js",
   "scripts": {},
