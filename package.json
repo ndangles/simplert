@@ -1,12 +1,12 @@
 {
   "name": "simplert",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple way to send alerts via Slack, Email, Discord, SMS, etc.",
   "main": "index.js",
   "scripts": {},
-	"bin": {
-		"generate-config": "./bin/generate-config.js"
-	},
+  "bin": {
+    "generate-config": "./bin/generate-config.js"
+  },
   "author": "Nicholas Dangles",
   "license": "ISC",
   "dependencies": {
