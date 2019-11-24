@@ -1,9 +1,9 @@
 # Simplert
-Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is currently geared towards personal and smaller apps where you just want a simple way to alert on some event like when a new user signs up. The idea is that you can just drop your simplert config file in any of your projects and quickly starting alerting on events. I would advise against using this in any critical production apps as of now.
+Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is currently geared towards personal and smaller apps where you just want a simple way to alert on some event like when a new user signs up. The idea is that you can just drop your simplert config file in any of your projects and quickly start alerting on events. I would advise against using this in any critical production apps as of now.
 
 ## Getting Started
 1. Install simplert: `npm install simplert`
-2. Generate simplert configuration file: `npx simplert generate-config`
+2. Generate simplert configuration file: `npx generate-config`
 
 ## Simplert Configuration File
     {
@@ -31,7 +31,7 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
 ***email:gmail:send_to*** - the default receipient email you want to send to, otherwise passed into the email function  
 ***email:gmail:send_from*** -  The default email you want to send from. You may have a Gsuite account with multiple aliases that you can specifiy here which one you want to send from. Otherwise passed into the email function  
 ***email:gmail:subject*** - A default email subject for every alert, otherwise passed into the email function  
-***email:gmail:token*** -  Used for authorization, can be generated with `npx simplert generate-gmail` assuming you have your `email:gmail:credentials` populated correctly.  
+***email:gmail:token*** -  Used for authorization, can be generated with `npx generate-gmail` assuming you have your `email:gmail:credentials` populated correctly.  
 ***email:gmail:credentials*** -  Credentials provided by Google when setting up your project in the [Google Cloud Console](https://console.cloud.google.com/) usually downloaded as `gmail-credentials.json`. Set this key as the contents of that file.  
 
 ## Usage
@@ -62,12 +62,12 @@ Send an email message
 
 ## Scripts
 #### **generate-config**
-`npx simplert generate-config`  
+`npx generate-config`  
 
 Generates a simplert configuration file. By default, all alert will be set to disabled, you will need to manually configure the necessary values in this file before using simplert.  
 
 #### **generate-gmail**
-`npx simplert generate-gmail`  
+`npx generate-gmail`  
 
 This will generate an auth token and automatically populate the `email:gmail:token` value in your configuration file. This assumes that you have `email:gmail:credentials` set in your configuration file which should be set to the content in your `gmail-credentials.json` file that was download from Google Cloud Console when setting up a project.
 
