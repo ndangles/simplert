@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const path = require("path");
-const DEFAULT_CONFIG_NAME = "simplert.cfg.json";
+const DEFAULT_CONFIG_NAME = "simplert.json";
 let config_name = DEFAULT_CONFIG_NAME;
 
 const fs = require("fs");

@@ -10,7 +10,7 @@ let gmailAuth = "";
 exports.configure = function(file) {
   try {
     user_config = require(path.resolve(`${__dirname}/../../${file}`));
-    template_config = require(__dirname + "/simplert.cfg.json");
+    template_config = require(__dirname + "/simplert.json");
 
     user_keys = getAllKeys(user_config);
     template_keys = getAllKeys(template_config);
