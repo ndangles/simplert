@@ -15,8 +15,9 @@ readline.question(
   "Path to your simplert configuration file: ",
   simplertCfgFile => {
     const simplert_config = require(path.resolve(
-      __dirname + "/../" + simplertCfgFile
+      process.cwd() + "/" + simplertCfgFile
     ));
+		console.log(simplert_config)
 
 		const { client_secret, client_id, redirect_uris } = simplert_config.email.gmail.credentials.installed;
 		const oAuth2Client = new google.auth.OAuth2(
