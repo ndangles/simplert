@@ -1,7 +1,17 @@
 {
-	"discord": {
-		"enabled": false,
-		"token": "",
-		"send_to": ""
-	}	
+  "discord": {
+    "enabled": false,
+    "token": "",
+    "send_to": ""
+  },
+  "email": {
+    "gmail": {
+      "enabled": false,
+      "send_to": "",
+      "send_from": "",
+      "subject": "",
+      "token": {},
+      "credentials": {}
+    }
+  }
 }

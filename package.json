@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {},
   "bin": {
-    "generate-config": "./bin/generate-config.js"
+    "generate-config": "./bin/generate-config.js",
+    "generate-gmail": "./bin/generate-gmail-creds.js"
   },
   "author": "Nicholas Dangles",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "discord.js": "^11.5.1",
+    "googleapis": "^45.0.0"
   }
 }
