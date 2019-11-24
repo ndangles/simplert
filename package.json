@@ -10,6 +10,29 @@
   },
   "author": "Nicholas Dangles",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ndangles/simplert.git"
+  },
+  "keywords": [
+    "simple alerts",
+    "simple events",
+    "simplert",
+    "alerts",
+    "events",
+    "discord alerts",
+    "gmail alerts",
+    "gmail",
+    "send alert",
+    "easy alerts",
+    "send email",
+    "discord"
+  ],
+  "bugs": {
+    "url": "https://github.com/ndangles/simplert/issues"
+  },
+  "readme": "README.md",
+  "homepage": "https://github.com/ndangles/simplert#readme",
   "dependencies": {
     "discord.js": "^11.5.1",
     "googleapis": "^45.0.0"
