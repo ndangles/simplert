@@ -1,5 +1,5 @@
 # Simplert
-Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is currently geared towards personal and smaller apps where you just want a simple way to alert on some event like when a new user signs up. The idea is that you can just drop your simplert config file in any of your projects and quickly start alerting on events. I would advise against using this in any critical production apps as of now.
+Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is currently geared towards personal and smaller apps where you just want a simple way to alert on some event like when a new user signs up. The idea is that you can just drop your simplert config file in any of your projects and quickly start alerting on events through multiple platforms without having to rewrite or copy over platform specific code. I would advise against using this in any critical production apps as of now.
 
 ## Getting Started
 1. Install simplert: `npm install simplert`
@@ -21,6 +21,11 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
           "token": {},
           "credentials": {}
         }
+      },
+      "slack": {
+        "enabled": false,
+        "send_to": "",
+        "token": ""
       }
     }
 
@@ -33,6 +38,8 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
 ***email:gmail:subject*** - A default email subject for every alert, otherwise passed into the email function  
 ***email:gmail:token*** -  Used for authorization, can be generated with `npx generate-gmail` assuming you have your `email:gmail:credentials` populated correctly.  
 ***email:gmail:credentials*** -  Credentials provided by Google when setting up your project in the [Google Cloud Console](https://console.cloud.google.com/) usually downloaded as `gmail-credentials.json`. Set this key as the contents of that file.  
+***slack:send_to*** - The channel or user you want to send the message to. Examples: #some_channel or @some_user
+***slack:token*** - The token of your Slack bot. Make sure it has the right permissions setup to send messages.
 
 ## Usage
 *Note: Make sure you have setup your configuration file*  
@@ -59,6 +66,17 @@ Send an email message
     simplert.email("some other event", "email@example.com"); // send to a specific email
     simplert.email("another event", "email@example.com", "Some Email Subject"); // set an email subject
     simplert.email("and another event", "email@example.com", "Some Email Subject", "alias@example.com"); // set a send from alias if you use Gsuite
+---
+####  **simplert.slack(message,[send_to])**
+Send a message to a Slack channel or user
+`send_to` can be optional if it is specified in the configuration file under`slack:send_to` as the default, otherwise it needs to be passed in as the second argument
+
+    const simplert = require("simplert");
+    simplert.configure("simplert.json");
+
+    simplert.slack("some event"); //assuming slack:send_to is set in config file
+    simplert.slack("some other event", "#general"); // send to a different channel
+    simplert.slack("some other event", "@johndoe"); // send to a different user 
 
 ## Scripts
 #### **generate-config**
@@ -75,7 +93,8 @@ This will generate an auth token and automatically populate the `email:gmail:tok
 ## Supported Alerts
 #### [Discord](https://discordapp.com/)  
 #### [Gmail](https://mail.google.com)  
-*Slack and SMS coming eventually*
+#### [Slack](https://slack.com)  
+*SMS coming eventually*
 
 ## Bugs and Improvements
 Please open an issue on the repo to report any bugs or improvements as I am sure there are. I would consider this still in beta and not to be used in any critical production apps rather used for personal projects that you just want some simple alerting on.

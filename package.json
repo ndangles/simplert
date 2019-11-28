@@ -26,7 +26,11 @@
     "send alert",
     "easy alerts",
     "send email",
-    "discord"
+    "discord",
+		"slack",
+		"slack alerts",
+		"slack message",
+		"send message"
   ],
   "bugs": {
     "url": "https://github.com/ndangles/simplert/issues"
@@ -34,6 +38,7 @@
   "readme": "README.md",
   "homepage": "https://github.com/ndangles/simplert#readme",
   "dependencies": {
+    "@slack/web-api": "^5.6.0",
     "discord.js": "^11.5.1",
     "googleapis": "^45.0.0"
   }

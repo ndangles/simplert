@@ -13,5 +13,10 @@
       "token": {},
       "credentials": {}
     }
+  },
+  "slack": {
+    "enabled": false,
+    "send_to": "",
+    "token": ""
   }
 }

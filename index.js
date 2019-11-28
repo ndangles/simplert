@@ -2,10 +2,12 @@ const path = require("path");
 const Discord = require("discord.js");
 const discord_client = new Discord.Client();
 const { google } = require("googleapis");
+const { WebClient } = require("@slack/web-api");
 
 let user_config = {};
 let discordLoggedIn = false;
 let gmailAuth = "";
+let slack = "";
 
 exports.configure = function(file) {
   try {
@@ -31,6 +33,10 @@ exports.configure = function(file) {
       );
       oAuth2Client.setCredentials(user_config.email.gmail.token);
       gmailAuth = oAuth2Client;
+    }
+
+    if (user_config.slack.enabled) {
+      slack = new WebClient(user_config.slack.token);
     }
   } catch (e) {
     if (e.code === "MODULE_NOT_FOUND") {
@@ -141,6 +147,30 @@ exports.email = function(
     });
 
     resolve(email);
+  });
+};
+
+exports.slack = function(message, send_to = user_config.slack.send_to) {
+  return new Promise(async (resolve, reject) => {
+    let error;
+
+    if (!user_config.slack.enabled)
+      error =
+        "Slack alert is not enabled. You need to enable it in your simplert config file";
+    else if (!message)
+      error =
+        ".slack() requires at least 1 argument. Pass it a message to send to Slack";
+    else if (!send_to)
+      error =
+        "You need to specify a Slack channel or user either in your simplert config file or passed into .slack()";
+
+    if (error) reject(new Error(error));
+
+    const message = await slack.chat.postMessage({
+			text: message,
+      channel: send_to
+    });
+    resolve(message);
   });
 };
 
