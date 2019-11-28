@@ -166,11 +166,11 @@ exports.slack = function(message, send_to = user_config.slack.send_to) {
 
     if (error) reject(new Error(error));
 
-    const message = await slack.chat.postMessage({
+    const slack_message = await slack.chat.postMessage({
 			text: message,
       channel: send_to
     });
-    resolve(message);
+    resolve(slack_message);
   });
 };
 

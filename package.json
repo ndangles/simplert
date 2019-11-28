@@ -1,6 +1,6 @@
 {
   "name": "simplert",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Simple way to send alerts via Slack, Email, Discord, SMS, etc.",
   "main": "index.js",
   "scripts": {},
@@ -27,10 +27,10 @@
     "easy alerts",
     "send email",
     "discord",
-		"slack",
-		"slack alerts",
-		"slack message",
-		"send message"
+    "slack",
+    "slack alerts",
+    "slack message",
+    "send message"
   ],
   "bugs": {
     "url": "https://github.com/ndangles/simplert/issues"
