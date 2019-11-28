@@ -30,7 +30,9 @@
     "slack",
     "slack alerts",
     "slack message",
-    "send message"
+    "send message",
+		"notify",
+		"notifications"
   ],
   "bugs": {
     "url": "https://github.com/ndangles/simplert/issues"

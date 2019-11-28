@@ -38,8 +38,8 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
 ***email:gmail:subject*** - A default email subject for every alert, otherwise passed into the email function  
 ***email:gmail:token*** -  Used for authorization, can be generated with `npx generate-gmail` assuming you have your `email:gmail:credentials` populated correctly.  
 ***email:gmail:credentials*** -  Credentials provided by Google when setting up your project in the [Google Cloud Console](https://console.cloud.google.com/) usually downloaded as `gmail-credentials.json`. Set this key as the contents of that file.  
-***slack:send_to*** - The channel or user you want to send the message to. Examples: #some_channel or @some_user
-***slack:token*** - The token of your Slack bot. Make sure it has the right permissions setup to send messages.
+***slack:send_to*** - The channel or user you want to send the message to. Examples: #some_channel or @some_user  
+***slack:token*** - The token of your Slack bot. Make sure it has the right permissions setup to send messages. 
 
 ## Usage
 *Note: Make sure you have setup your configuration file*  
