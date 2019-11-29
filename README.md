@@ -26,6 +26,15 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
         "enabled": false,
         "send_to": "",
         "token": ""
+      },
+      "sms": {
+        "twilio": {
+          "enabled": false,
+          "send_to": "",
+          "send_from": "",
+          "sid": "",
+          "token": ""
+        }
       }
     }
 
@@ -39,14 +48,19 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
 ***email:gmail:token*** -  Used for authorization, can be generated with `npx generate-gmail` assuming you have your `email:gmail:credentials` populated correctly.  
 ***email:gmail:credentials*** -  Credentials provided by Google when setting up your project in the [Google Cloud Console](https://console.cloud.google.com/) usually downloaded as `gmail-credentials.json`. Set this key as the contents of that file.  
 ***slack:send_to*** - The channel or user you want to send the message to. Examples: #some_channel or @some_user  
-***slack:token*** - The token of your Slack bot. Make sure it has the right permissions setup to send messages. 
+***slack:token*** - The token of your Slack bot. Make sure it has the right permissions setup to send messages.  
+***sms:twilio:send_to*** - The phone number you want to send an alert to including country code.  
+***sms:twilio:send_from*** - The Twilio phone number you want to send from on your account  
+***sms:twilio:sid*** - The ACCOUNT SID from your Twilio Console  
+***sms:twilio:token*** - The AUTH TOKEN from you Twilio Console  
+
 
 ## Usage
 *Note: Make sure you have setup your configuration file*  
 
 ---
 ####  **simplert.discord(message,[send_to])**
-Send a message to a discord channel. 
+*Send a message to a discord channel.*  
 `send_to` can be optional if it is specified in the configuration file under`discord:send_to` as the default, otherwise it needs to be passed in as the second argument
 
     const simplert = require("simplert");
@@ -56,19 +70,19 @@ Send a message to a discord channel.
     simplert.discord("some other event", "general"); // send to a different channel
 ---
 #### **simplert.email(body,[send_to, subject, send_from])**
-Send an email message
+*Send an email message.*  
 `send_to, subject, send_from` can be optional if defaults are set under `email:gmail:*` in the configuration file. Otherwise, they need to be passed as arguments to the function.
 
     const simplert = require("simplert");
     simplert.configure("simplert.json");
 
-    simplert.email("some event"); //assuming discord:send_to is set in config file
+    simplert.email("some event"); //assuming all key values are set under email:gmail:* in the config file
     simplert.email("some other event", "email@example.com"); // send to a specific email
     simplert.email("another event", "email@example.com", "Some Email Subject"); // set an email subject
     simplert.email("and another event", "email@example.com", "Some Email Subject", "alias@example.com"); // set a send from alias if you use Gsuite
 ---
 ####  **simplert.slack(message,[send_to])**
-Send a message to a Slack channel or user
+*Send a message to a Slack channel or user.*  
 `send_to` can be optional if it is specified in the configuration file under`slack:send_to` as the default, otherwise it needs to be passed in as the second argument
 
     const simplert = require("simplert");
@@ -77,6 +91,17 @@ Send a message to a Slack channel or user
     simplert.slack("some event"); //assuming slack:send_to is set in config file
     simplert.slack("some other event", "#general"); // send to a different channel
     simplert.slack("some other event", "@johndoe"); // send to a different user 
+---
+#### **simplert.sms(message,[send_to, send_from])**
+*Send an sms message.*  
+`send_to, send_from` can be optional if defaults are set under `sms:twilio:*` in the configuration file. Otherwise, they need to be passed as arguments to the function.
+
+    const simplert = require("simplert");
+    simplert.configure("simplert.json");
+
+    simplert.sms("some event"); //assuming sms:twilio:send_to and sms:twilio:send_from are set in config file
+    simplert.sms("some other event", "+12223334444"); // set a phone number to send to including country code 
+    simplert.sms("another event", "+12223334444", "+15556667777"); // set a phone number to send from your Twilio account
 
 ## Scripts
 #### **generate-config**
@@ -94,9 +119,8 @@ This will generate an auth token and automatically populate the `email:gmail:tok
 #### [Discord](https://discordapp.com/)  
 #### [Gmail](https://mail.google.com)  
 #### [Slack](https://slack.com)  
-*SMS coming eventually*
+#### [Twilio](https://twilio.com/)  
+*Open an issue on the repo if you have other platforms you want to see supported*
 
 ## Bugs and Improvements
 Please open an issue on the repo to report any bugs or improvements as I am sure there are. I would consider this still in beta and not to be used in any critical production apps rather used for personal projects that you just want some simple alerting on.
-
-

@@ -1,8 +1,8 @@
 {
   "discord": {
     "enabled": false,
-    "token": "",
-    "send_to": ""
+    "send_to": "",
+    "token": ""
   },
   "email": {
     "gmail": {
@@ -18,5 +18,14 @@
     "enabled": false,
     "send_to": "",
     "token": ""
+  },
+  "sms": {
+    "twilio": {
+      "enabled": false,
+      "send_to": "",
+      "send_from": "",
+      "sid": "",
+      "token": ""
+    }
   }
 }

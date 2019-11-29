@@ -32,7 +32,12 @@
     "slack message",
     "send message",
     "notify",
-    "notifications"
+    "notifications",
+		"twilio",
+		"sms",
+		"text message",
+		"send sms",
+		"send text message"
   ],
   "bugs": {
     "url": "https://github.com/ndangles/simplert/issues"
@@ -42,6 +47,7 @@
   "dependencies": {
     "@slack/web-api": "^5.6.0",
     "discord.js": "^11.5.1",
-    "googleapis": "^45.0.0"
+    "googleapis": "^45.0.0",
+    "twilio": "^3.37.1"
   }
 }

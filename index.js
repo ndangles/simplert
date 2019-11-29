@@ -8,6 +8,7 @@ let user_config = {};
 let discordLoggedIn = false;
 let gmailAuth = "";
 let slack = "";
+let twilio = "";
 
 exports.configure = function(file) {
   try {
@@ -38,6 +39,13 @@ exports.configure = function(file) {
     if (user_config.slack.enabled) {
       slack = new WebClient(user_config.slack.token);
     }
+
+    if (user_config.sms.twilio.enabled) {
+      twilio = require("twilio")(
+        user_config.sms.twilio.sid,
+        user_config.sms.twilio.token
+      );
+    }
   } catch (e) {
     if (e.code === "MODULE_NOT_FOUND") {
       throw new Error(
@@ -65,12 +73,12 @@ exports.discord = function(message, send_to = user_config.discord.send_to) {
       error =
         "You need to specify a Discord channel either in your simplert config file or passed into .discord()";
 
-    if (error) reject(new Error(error));
+    if (error) return reject(new Error(error));
 
     if (!discordLoggedIn) {
       discordLoggedIn = true;
       discord_client.login(user_config.discord.token).catch(error => {
-        reject(error);
+        return reject(error);
       });
 
       discord_client.on("ready", () => {
@@ -78,14 +86,14 @@ exports.discord = function(message, send_to = user_config.discord.send_to) {
           channel => channel.name === send_to
         );
         discord_client.channels.get(channel.id).send(message);
-        resolve();
+        return resolve();
       });
     } else {
       const channel = discord_client.channels.find(
         channel => channel.name === send_to
       );
       discord_client.channels.get(channel.id).send(message);
-      resolve();
+      return resolve();
     }
   });
 };
@@ -115,7 +123,7 @@ exports.email = function(
       error =
         "You need to specify a sender email either in your simplert config file or passed into .email()";
 
-    if (error) reject(new Error(error));
+    if (error) return reject(new Error(error));
 
     const gmail = google.gmail({ version: "v1", auth: gmailAuth });
 
@@ -146,7 +154,7 @@ exports.email = function(
       }
     });
 
-    resolve(email);
+    return resolve(email);
   });
 };
 
@@ -164,13 +172,46 @@ exports.slack = function(message, send_to = user_config.slack.send_to) {
       error =
         "You need to specify a Slack channel or user either in your simplert config file or passed into .slack()";
 
-    if (error) reject(new Error(error));
+    if (error) return reject(new Error(error));
 
     const slack_message = await slack.chat.postMessage({
-			text: message,
+      text: message,
       channel: send_to
     });
-    resolve(slack_message);
+    return resolve(slack_message);
+  });
+};
+
+exports.sms = function(
+  message,
+  send_to = user_config.sms.twilio.send_to,
+  send_from = user_config.sms.twilio.send_from
+) {
+  return new Promise(async (resolve, reject) => {
+    let error;
+
+    if (!user_config.sms.twilio.enabled)
+      error =
+        "SMS alert is not enabled. You need to enable it in your simplert config file";
+    else if (!message)
+      error =
+        ".sms() requires at least 1 argument. Pass it a message to send via SMS";
+    else if (!send_to)
+      error =
+        "You need to specify a phone number to send to in your simplert config file or passed into .sms()";
+    else if (!send_from)
+      error =
+        "You need to specify a phone number to send from in your simplert config file or passed into .sms()";
+
+    if (error) return reject(new Error(error));
+
+    const sms = await twilio.messages.create({
+      body: message,
+      from: send_from,
+      to: send_to
+    });
+
+    return resolve(sms);
   });
 };
 
