@@ -1,6 +1,6 @@
 {
   "name": "simplert",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Simple way to send alerts via Slack, Email, Discord, SMS, etc.",
   "main": "index.js",
   "scripts": {},
@@ -33,11 +33,11 @@
     "send message",
     "notify",
     "notifications",
-		"twilio",
-		"sms",
-		"text message",
-		"send sms",
-		"send text message"
+    "twilio",
+    "sms",
+    "text message",
+    "send sms",
+    "send text message"
   ],
   "bugs": {
     "url": "https://github.com/ndangles/simplert/issues"
