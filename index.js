@@ -22,7 +22,7 @@ exports.configure = function(file) {
     template_keys = getAllKeys(template_config);
 
     if (user_keys.join() !== template_keys.join())
-      throw "Your simplert config file is not up to date, use the generate command to get the most up to date version";
+      throw "Your simplert config file is not up to date, use the 'npx update-config' command to get the most up to date version";
 
     if (user_config.email.gmail.enabled) {
       const {

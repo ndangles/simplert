@@ -22,6 +22,12 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
           "credentials": {}
         }
       },
+      "file": {
+        "enabled": false,
+        "filename": "",
+        "filesize": 10,
+        "maxfiles": 10
+      },
       "slack": {
         "enabled": false,
         "send_to": "",
@@ -47,6 +53,9 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
 ***email:gmail:subject*** - A default email subject for every alert, otherwise passed into the email function  
 ***email:gmail:token*** -  Used for authorization, can be generated with `npx generate-gmail` assuming you have your `email:gmail:credentials` populated correctly.  
 ***email:gmail:credentials*** -  Credentials provided by Google when setting up your project in the [Google Cloud Console](https://console.cloud.google.com/) usually downloaded as `gmail-credentials.json`. Set this key as the contents of that file.  
+***file:filename*** - The absolute path to where you want your log file to live. Example: /home/nick/my-app/logs/log.txt  
+***file:filesize*** - The size of each log file in MegaBytes before rotating to a new log file  
+***file:maxfiles*** - The maximum number of logs files to generate during log rotation. Example: a maxfiles of 10 and filesize of 5 would log the most recent 50MB of data across log.txt, log1.txt, log2.txt ... log9.txt  
 ***slack:send_to*** - The channel or user you want to send the message to. Examples: #some_channel or @some_user  
 ***slack:token*** - The token of your Slack bot. Make sure it has the right permissions setup to send messages.  
 ***sms:twilio:send_to*** - The phone number you want to send an alert to including country code.  
@@ -81,6 +90,16 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
     simplert.email("another event", "email@example.com", "Some Email Subject"); // set an email subject
     simplert.email("and another event", "email@example.com", "Some Email Subject", "alias@example.com"); // set a send from alias if you use Gsuite
 ---
+####  **simplert.file(text)**
+*Send text to a file*  
+All values have to be set under `file:*` in your configuration file.  
+
+    const simplert = require("simplert");
+    simplert.configure("simplert.json");
+
+    simplert.file("some event");
+    simplert.file(JSON.stringify({"data": "some data"}));
+---
 ####  **simplert.slack(message,[send_to])**
 *Send a message to a Slack channel or user.*  
 `send_to` can be optional if it is specified in the configuration file under`slack:send_to` as the default, otherwise it needs to be passed in as the second argument
@@ -109,6 +128,12 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
 
 Generates a simplert configuration file. By default, all alert will be set to disabled, you will need to manually configure the necessary values in this file before using simplert.  
 
+#### **update-config**
+`npx update-config`  
+
+Updates your current simplert configuration file. This is needed if you download a new version of simplert that supports a new platform.  
+
+
 #### **generate-gmail**
 `npx generate-gmail`  
 
@@ -120,6 +145,7 @@ This will generate an auth token and automatically populate the `email:gmail:tok
 #### [Gmail](https://mail.google.com)  
 #### [Slack](https://slack.com)  
 #### [Twilio](https://twilio.com/)  
+#### [Local File System](https://nodejs.org/api/fs.html)
 *Open an issue on the repo if you have other platforms you want to see supported*
 
 ## Bugs and Improvements

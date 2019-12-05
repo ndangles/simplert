@@ -6,7 +6,8 @@
   "scripts": {},
   "bin": {
     "generate-config": "./bin/generate-config.js",
-    "generate-gmail": "./bin/generate-gmail-creds.js"
+    "generate-gmail": "./bin/generate-gmail-creds.js",
+    "update-config": "./bin/update-config.js"
   },
   "author": "Nicholas Dangles",
   "license": "ISC",
@@ -37,7 +38,12 @@
     "sms",
     "text message",
     "send sms",
-    "send text message"
+    "send text message",
+    "file system",
+    "log to file",
+    "write to file",
+    "logs",
+    "log rotation"
   ],
   "bugs": {
     "url": "https://github.com/ndangles/simplert/issues"

@@ -17,39 +17,42 @@ readline.question(
     const simplert_config = require(path.resolve(
       process.cwd() + "/" + simplertCfgFile
     ));
-		console.log(simplert_config)
 
-		const { client_secret, client_id, redirect_uris } = simplert_config.email.gmail.credentials.installed;
-		const oAuth2Client = new google.auth.OAuth2(
-			client_id,
-			client_secret,
-			redirect_uris[0]
-		);
+    const {
+      client_secret,
+      client_id,
+      redirect_uris
+    } = simplert_config.email.gmail.credentials.installed;
+    const oAuth2Client = new google.auth.OAuth2(
+      client_id,
+      client_secret,
+      redirect_uris[0]
+    );
 
-		const authUrl = oAuth2Client.generateAuthUrl({
-			access_type: "offline",
-			scope: SCOPES
-		});
+    const authUrl = oAuth2Client.generateAuthUrl({
+      access_type: "offline",
+      scope: SCOPES
+    });
 
-		console.log("Authorize this app by visiting this url:", authUrl);
-		readline.question("Enter the code from that page here: ", code => {
-			readline.close();
-			oAuth2Client.getToken(code, (err, token) => {
-				if (err) {
-					console.error("Error retrieving access token", err);
-					process.exit(1);
-				}
+    console.log("Authorize this app by visiting this url:", authUrl);
+    readline.question("Enter the code from that page here: ", code => {
+      readline.close();
+      oAuth2Client.getToken(code, (err, token) => {
+        if (err) {
+          console.error("Error retrieving access token", err);
+          process.exit(1);
+        }
 
-				simplert_config.email.gmail.token = token;
-				fs.writeFile(
-					simplertCfgFile,
-					JSON.stringify(simplert_config, null, 2),
-					function(err) {
-						if (err) return console.error(err);
-						console.log("Simplert config file updated with Gmail token");
-					}
-				);
-			});
-		});
+        simplert_config.email.gmail.token = token;
+        fs.writeFile(
+          simplertCfgFile,
+          JSON.stringify(simplert_config, null, 2),
+          function(err) {
+            if (err) return console.error(err);
+            console.log("Simplert config file updated with Gmail token");
+          }
+        );
+      });
+    });
   }
 );
