@@ -53,7 +53,7 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
 ***email:gmail:subject*** - A default email subject for every alert, otherwise passed into the email function  
 ***email:gmail:token*** -  Used for authorization, can be generated with `npx generate-gmail` assuming you have your `email:gmail:credentials` populated correctly.  
 ***email:gmail:credentials*** -  Credentials provided by Google when setting up your project in the [Google Cloud Console](https://console.cloud.google.com/) usually downloaded as `gmail-credentials.json`. Set this key as the contents of that file.  
-***file:filename*** - The absolute path to where you want your log file to live. Example: /home/nick/my-app/logs/log.txt  
+***file:filename*** - The absolute or relative path to where you want your log file to live. Example: /home/nick/my-app/logs/log.txt or logs/log.txt  
 ***file:filesize*** - The size of each log file in MegaBytes before rotating to a new log file  
 ***file:maxfiles*** - The maximum number of logs files to generate during log rotation. Example: a maxfiles of 10 and filesize of 5 would log the most recent 50MB of data across log.txt, log1.txt, log2.txt ... log9.txt  
 ***slack:send_to*** - The channel or user you want to send the message to. Examples: #some_channel or @some_user  
@@ -92,7 +92,7 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
 ---
 ####  **simplert.file(text)**
 *Send text to a file*  
-All values have to be set under `file:*` in your configuration file.  
+All values have to be set under `file:*` in your configuration file. Note: This will not add any newlines when writing to the file. 
 
     const simplert = require("simplert");
     simplert.configure("simplert.json");
