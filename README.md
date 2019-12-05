@@ -45,7 +45,7 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
     }
 
 
-***enabled*** - whether you want this type of alerting enabled or not  
+***enabled*** - whether you want this type of alerting enabled or not. If set to false and a function is called, it will immediately just return. Easy way to disable alerting without having to delete all of your simplert function calls from your code.  
 ***discord:token*** - the token of your discord bot   
 ***discord:send_to*** -  the name of the discord channel you want to send your alerts too. Make sure your bot has permission on the server to send messages    
 ***email:gmail:send_to*** - the default receipient email you want to send to, otherwise passed into the email function  

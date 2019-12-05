@@ -83,13 +83,11 @@ exports.configure = function(file) {
 };
 
 exports.discord = function(message, send_to = user_config.discord.send_to) {
+  if (!user_config.discord.enabled) return;
   return new Promise((resolve, reject) => {
     let error;
 
-    if (!user_config.discord.enabled)
-      error =
-        "Discord alert is not enabled. You need to enable it in your simplert config file";
-    else if (!message)
+    if (!message)
       error =
         ".discord() requires at least 1 argument. Pass it a message to send to Discord";
     else if (!send_to)
@@ -127,13 +125,11 @@ exports.email = function(
   subject = user_config.email.gmail.subject,
   send_from = user_config.email.gmail.send_from
 ) {
+  if (!user_config.email.gmail.enabled) return;
   return new Promise(async (resolve, reject) => {
     let error;
 
-    if (!user_config.email.gmail.enabled)
-      error =
-        "Gmail alert is not enabled. You need to enable it in your simplert config file";
-    else if (!body)
+    if (!body)
       error =
         ".email() requires at least 1 argument. Pass it a message to send in the email body";
     else if (!send_to)
@@ -182,13 +178,11 @@ exports.email = function(
 };
 
 exports.file = function(text) {
+  if (!user_config.file.enabled) return;
   return new Promise((resolve, reject) => {
     let error;
 
-    if (!user_config.file.enabled)
-      error =
-        "File logging is not enabled. You need to enable it in your simplert config file";
-    else if (!user_config.file.filename)
+    if (!user_config.file.filename)
       error =
         "You need to specify the absolute file path and file name you want to write to";
     else if (!user_config.file.filesize)
@@ -250,13 +244,11 @@ exports.file = function(text) {
 };
 
 exports.slack = function(message, send_to = user_config.slack.send_to) {
+  if (!user_config.slack.enabled) return;
   return new Promise(async (resolve, reject) => {
     let error;
 
-    if (!user_config.slack.enabled)
-      error =
-        "Slack alert is not enabled. You need to enable it in your simplert config file";
-    else if (!message)
+    if (!message)
       error =
         ".slack() requires at least 1 argument. Pass it a message to send to Slack";
     else if (!send_to)
@@ -278,13 +270,11 @@ exports.sms = function(
   send_to = user_config.sms.twilio.send_to,
   send_from = user_config.sms.twilio.send_from
 ) {
+  if (!user_config.sms.twilio.enabled) return;
   return new Promise(async (resolve, reject) => {
     let error;
 
-    if (!user_config.sms.twilio.enabled)
-      error =
-        "SMS alert is not enabled. You need to enable it in your simplert config file";
-    else if (!message)
+    if (!message)
       error =
         ".sms() requires at least 1 argument. Pass it a message to send via SMS";
     else if (!send_to)
