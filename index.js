@@ -1,3 +1,4 @@
+const fs = require("fs");
 const path = require("path");
 const Discord = require("discord.js");
 const discord_client = new Discord.Client();
@@ -9,6 +10,8 @@ let discordLoggedIn = false;
 let gmailAuth = "";
 let slack = "";
 let twilio = "";
+let writeStream = "";
+let numOfFiles = 0;
 
 exports.configure = function(file) {
   try {
@@ -34,6 +37,26 @@ exports.configure = function(file) {
       );
       oAuth2Client.setCredentials(user_config.email.gmail.token);
       gmailAuth = oAuth2Client;
+    }
+
+    if (user_config.file.enabled) {
+      const filename = user_config.file.filename;
+      writeStream = fs.createWriteStream(filename, { flags: "a" });
+      if (fs.existsSync(filename)) numOfFiles = 1;
+      for (let i = 0; i < user_config.file.maxfiles; i++) {
+        const num = i + 1;
+        if (
+          fs.existsSync(
+            path.dirname(filename) +
+              "/" +
+              path.basename(filename, path.extname(filename)) +
+              num +
+              path.extname(filename)
+          )
+        ) {
+          numOfFiles++;
+        }
+      }
     }
 
     if (user_config.slack.enabled) {
@@ -155,6 +178,74 @@ exports.email = function(
     });
 
     return resolve(email);
+  });
+};
+
+exports.file = function(text) {
+  return new Promise((resolve, reject) => {
+    let error;
+
+    if (!user_config.file.enabled)
+      error =
+        "File logging is not enabled. You need to enable it in your simplert config file";
+    else if (!user_config.file.filename)
+      error =
+        "You need to specify the absolute file path and file name you want to write to";
+    else if (!user_config.file.filesize)
+      error =
+        "You need to specifiy the max file size before files rotate in your simplert config file";
+    else if (!user_config.file.maxfiles)
+      error =
+        "You need to specify the max amount of log files you want in your simplert config file before they are rotated out";
+
+    if (error) return reject(new Error(error));
+
+    const filename = user_config.file.filename;
+    const stats = fs.statSync(filename);
+    const filesizeMB = stats["size"] / 1000000.0;
+
+    if (numOfFiles > 0 && filesizeMB >= user_config.file.filesize) {
+      for (let i = numOfFiles; i > 0; i--) {
+        if (i == 1) {
+          fs.renameSync(
+            filename,
+            path.dirname(filename) +
+              "/" +
+              path.basename(filename, path.extname(filename)) +
+              i +
+              path.extname(filename)
+          );
+        } else if (i > 1) {
+          fs.renameSync(
+            path.dirname(filename) +
+              "/" +
+              path.basename(filename, path.extname(filename)) +
+              (i - 1) +
+              path.extname(filename),
+            path.dirname(filename) +
+              "/" +
+              path.basename(filename, path.extname(filename)) +
+              i +
+              path.extname(filename)
+          );
+          if (i >= user_config.file.maxfiles) {
+            fs.unlinkSync(
+              path.dirname(filename) +
+                "/" +
+                path.basename(filename, path.extname(filename)) +
+                i +
+                path.extname(filename)
+            );
+          }
+        }
+      }
+
+      fs.writeFile(filename, text, err => {
+        if (err) return reject(err);
+      });
+    } else {
+      writeStream.write(text);
+    }
   });
 };
 
