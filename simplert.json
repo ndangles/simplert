@@ -18,7 +18,8 @@
     "enabled": false,
     "filename": "",
     "filesize": 10,
-    "maxfiles": 10
+    "maxfiles": 10,
+    "newline": true
   },
   "slack": {
     "enabled": false,

@@ -26,7 +26,8 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
         "enabled": false,
         "filename": "",
         "filesize": 10,
-        "maxfiles": 10
+        "maxfiles": 10,
+        "newline": true
       },
       "slack": {
         "enabled": false,
@@ -56,6 +57,7 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
 ***file:filename*** - The absolute or relative path to where you want your log file to live. Example: /home/nick/my-app/logs/log.txt or logs/log.txt  
 ***file:filesize*** - The size of each log file in MegaBytes before rotating to a new log file  
 ***file:maxfiles*** - The maximum number of logs files to generate during log rotation. Example: a maxfiles of 10 and filesize of 5 would log the most recent 50MB of data across log.txt, log1.txt, log2.txt ... log9.txt  
+***file:newline*** - If true, will automatically add a newline to any text written. Default: true  
 ***slack:send_to*** - The channel or user you want to send the message to. Examples: #some_channel or @some_user  
 ***slack:token*** - The token of your Slack bot. Make sure it has the right permissions setup to send messages.  
 ***sms:twilio:send_to*** - The phone number you want to send an alert to including country code.  
@@ -92,13 +94,13 @@ Simple way to send alerts via Slack, Email, Discord, SMS, etc. Simplert is curre
 ---
 ####  **simplert.file(text)**
 *Send text to a file*  
-All values have to be set under `file:*` in your configuration file. Note: This will not add any newlines when writing to the file. 
+All values have to be set under `file:*` in your configuration file. Note: This function will automatically call JSON.stringify on any object passed in.  
 
     const simplert = require("simplert");
     simplert.configure("simplert.json");
 
     simplert.file("some event");
-    simplert.file(JSON.stringify({"data": "some data"}));
+    simplert.file({"data": "some data"});
 ---
 ####  **simplert.slack(message,[send_to])**
 *Send a message to a Slack channel or user.*  

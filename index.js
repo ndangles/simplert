@@ -234,11 +234,11 @@ exports.file = function(text) {
         }
       }
 
-      fs.writeFile(filename, text, err => {
+      fs.writeFile(filename, formatText(text), err => {
         if (err) return reject(err);
       });
     } else {
-      writeStream.write(text);
+      writeStream.write(formatText(text));
     }
   });
 };
@@ -303,4 +303,17 @@ function getAllKeys(data) {
   for (pkey of parent_keys)
     child_keys = child_keys.concat(Object.keys(data[pkey]));
   return parent_keys.concat(child_keys).sort();
+}
+
+function formatText(text) {
+  let formattedText = text;
+  if (typeof text === "object") {
+    formattedText = JSON.stringify(text);
+  }
+
+  if (user_config.file.newline) {
+    formattedText += "\n";
+  }
+
+  return formattedText;
 }
